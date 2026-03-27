@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package fluentfusion;
+
+option java_package = "com.qualitypaper.fluentfusion.buffers";
+option java_multiple_files = true;
+
+message Weights {
+  double correctnessWeight = 1;
+  double experienceWeight = 2;
+}

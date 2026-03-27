@@ -1,0 +1,19 @@
+spring:
+  ssl:
+    enabled: false
+  config:
+    import: "optional:configserver:"
+  cloud:
+    config:
+      enabled: true
+      fail-fast: false
+      name: pingofamily-server
+      profile: development
+
+keystore:
+  resource: classpath:certs/client.p12
+  password: --keystore--pass--
+  type: PKCS12
+truststore:
+  resource: classpath:certs/truststore.p12
+  type: PKCS12

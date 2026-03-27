@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="alternate" hreflang="en" href="https://pingo.family/en" />
+        <link rel="alternate" hreflang="de" href="https://pingo.family/de" />
+        <link rel="alternate" hreflang="es" href="https://pingo.family/es" />
+        <link rel="alternate" hreflang="x-default" href="https://pingo.family/en" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="white" />
+        <meta name="color-scheme" content="only light" />
+        <meta name="author" content="Kiril Kolomiiets" />
+
+        <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+        <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.ico" />
+        <!--
+			Notice the use of %PUBLIC_URL% in the tags above.
+			It will be replaced with the URL of the `public` folder during the build.
+			Only files inside the `public` folder can be referenced from the HTML.
+
+			Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+			work correctly both with client-side routing and a non-root public URL.
+			Learn how to configure a non-root public URL by running `npm run build`.
+		-->
+
+        <title>Pingo Family</title>
+        <meta
+            name="description"
+            content="Begin your language journey with our platform! Tailored lessons, interactive exercises, and a supportive community await. Start exploring today!"
+        />
+
+        <meta property="og:image" content="%PUBLIC_URL%/pingofamily.png" />
+    </head>
+    <body>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript>
+            <iframe
+                src="https://www.googletagmanager.com/ns.html?id=GTM-TZ4QHVM2"
+                height="0"
+                width="0"
+                style="display: none; visibility: hidden"
+            ></iframe>
+        </noscript>
+        <!-- End Google Tag Manager (noscript) -->
+
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root"></div>
+        <!--
+			This HTML file is a template.
+			If you open it directly in the browser, you will see an empty page.
+
+			You can add webfonts, meta tags, or analytics to this file.
+			The build step will place the bundled scripts into the <body> tag.
+
+			To begin the development, run `npm start` or `yarn start`.
+			To create a production bundle, use `npm run build` or `yarn build`.
+		-->
+    </body>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=--gtag-id--"></script>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag("js", new Date());
+
+        gtag("config", "--gtag-config--");
+    </script>
+</html>

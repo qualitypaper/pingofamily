@@ -1,0 +1,86 @@
+{
+  "name": "pingofamily-frontend",
+  "version": "1.0.0",
+  "scripts": {
+    "check-unused": "depcheck",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "clean_css": "postcss src/index.css -o dist/index.css",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^3.25.0",
+    "@react-hook/media-query": "^1.1.1",
+    "@reduxjs/toolkit": "^2.5.0",
+    "@tailwindcss/postcss": "^4.1.12",
+    "axios": "^1.11.0",
+    "eslint-config-react-app": "^7.0.1",
+    "i18next": "^23.11.5",
+    "i18next-browser-languagedetector": "^8.2.0",
+    "postcss": "^8.5.6",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-ga4": "^2.1.0",
+    "react-i18next": "^14.1.2",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^6.21.2",
+    "react-scripts": "^5.0.1",
+    "react-toastify": "^11.0.5",
+    "recharts": "^3.1.2",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "3.1.0",
+    "reselect": "^4.1.8",
+    "uuid": "^10.0.0",
+    "web-vitals": "^2.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qualitypaper/pingofamily-frontend.git"
+  },
+  "keywords": [
+    "pingo family",
+    "language app",
+    "vocabulary learning"
+  ],
+  "author": "qualitypaper",
+  "license": "ISC",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.3",
+    "@babel/eslint-parser": "^7.28.0",
+    "@babel/helper-module-transforms": "7.28.3",
+    "@babel/preset-env": "^7.28.3",
+    "@fullhuman/postcss-purgecss": "^7.0.2",
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "@types/uuid": "^10.0.0",
+    "autoprefixer": "^10.4.20",
+    "depcheck": "^1.4.7",
+    "tailwindcss": "^3.4.17",
+    "terser-webpack-plugin": "^5.3.14",
+    "webpack-bundle-analyzer": "^4.10.2"
+  }
+}

@@ -1,0 +1,35 @@
+{
+    "name": "Pingo Family - Wortschatz Training",
+    "short_name": "Pingo",
+    "description": "Meistere Wörter und Redewendungen mit Pingo Family.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ff6f61",
+    "lang": "de",
+    "scope": "/",
+    "icons": [
+        {
+            "src": "%PUBLIC_URL%/logo.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "%PUBLIC_URL%/logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "%PUBLIC_URL%/pingofamily.jpg",
+            "sizes": "1280x720",
+            "type": "image/jpg",
+            "description": "Learn vocabulary with Pingo Family on any device."
+        }
+    ],
+    "orientation": "portrait",
+    "prefer_related_applications": false
+}

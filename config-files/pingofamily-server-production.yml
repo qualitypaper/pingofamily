@@ -1,0 +1,143 @@
+server:
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/plain
+  port: 9090
+
+app:
+  name: Pingo Family
+
+spring:
+  application:
+    name: pingofamily
+  web:
+    resources:
+      static-locations: assets/
+  thread-executor: virtual
+  threads:
+    virtual:
+      enabled: true
+
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+  sql:
+    init:
+      mode: always
+
+  datasource:
+    url: "--database-url--"
+    username: "--username--"
+    password: "--password--"
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 50
+      idle-timeout: 30000
+      leak-detection-threshold: 60000
+      connection-timeout: 30000
+
+  jpa:
+    open-in-view: false
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: "--google-client-id--"
+            client-secret: "--google-client-secre--"
+            redirect-uri: ${microservice.main.host}/login/oauth2/code/google
+            scope:
+              - email
+              - profile
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      username: "--redis-username--"
+      password: "--redis-user-password--"
+      database: 0
+      timeout: 5000
+      connect-timeout: 5000
+
+ai:
+  dataset:
+    default:
+      path: datasets/default.csv
+  weights:
+    default:
+      path: weights/default.bin
+  training:
+    force-retraining: true
+
+service:
+  mailersend:
+    api-key: "--mailersend-api-key--"
+  google:
+    tts:
+      api-key: "--google-tts-api-key--"
+      synthesize-url: https://texttospeech.googleapis.com/v1/text:synthesize
+      voices-url: https://texttospeech.googleapis.com/v1/voices
+      keys-json-path: assets/keys.json
+
+  ultra-lingua:
+    url: https://api.ultralingua.com/api/2.0
+    api-key: "--ultra-lingua-api-key--"
+
+  openai:
+    url: https://api.openai.com/v1/chat/completions
+    api-key: "--openai--api-key--"
+    gpt-model: gpt-4o-mini
+
+  aws:
+    s3:
+      access-key-id: "--aws-access-key-id"
+      secret-key: "--aws-secret-key--"
+      bucket: --bucket-name--
+      url: --s3-bucket-url--
+
+    translate:
+      access-key-id: "--amazon-translate-access-key-id--"
+      secret-key: "--amazon-translation-secret-key--"
+
+logging:
+  level:
+    org:
+      springframework:
+        transaction: DEBUG
+rsa:
+  public-key: classpath:key/public.pem
+  private-key: classpath:key/private.pem
+
+microservice:
+  frontend:
+    host: --frontend-production-base-url--
+  websocket:
+    port: 1234
+  main:
+    host: --backend--productino-base-url--
+    vocabularyGroupImagesFolder: vocabularyGroupImages
+
+url:
+  frontend-forgot-password: ${microservice.frontend.host}/new-password/
+  confirmation: ${microservice.main.host}/auth/confirmUser/
+  static:
+    audio: ${service.aws.s3.url}/audio/
+    images: ${service.aws.s3.url}/images/
+    config: ${service.aws.s3.url}/config/
+
+learning:
+  number-of-words-per-training: 5
+  new-words-portion: 0.6

@@ -1,0 +1,160 @@
+services:
+  server:
+    image: gitea/gitea:latest
+    container_name: gitea
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+
+      - GITEA__service__DISABLE_REGISTRATION=true
+      - GITEA__service__REQUIRE_SIGNIN_VIEW=true
+
+      - GITEA__repository__FORCE_PRIVATE=true
+      - GITEA__repository__DEFAULT_PRIVATE=private
+
+      - GITEA__security__INITIAL_ADMIN_USER=${DEPLOY_USER}
+      - GITEA__security__INITIAL_ADMIN_PASSWORD=${DEPLOY_PASS}
+      - GITEA__security__INITIAL_ADMIN_EMAIL=${DEPLOY_EMAIL}
+
+      - GITEA__database__DB_TYPE=sqlite3
+      - GITEA__database__PATH=/data/gitea/gitea.db
+
+    restart: always
+    networks:
+      - webnet
+    volumes:
+      - gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3000:3000"
+      - "2222:22"
+    depends_on:
+      - backend
+      - nginx
+      - models
+
+  backend:
+    image: qualitypaper/pingofamily:simpletraining
+    container_name: backend
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${MAIN_DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${MAIN_DB_USER}
+      - SPRING_DATASOURCE_PASSWORD=${MAIN_DB_PASS}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_DATA_REDIS_HOST=cache
+      - SPRING_CLOUD_CONFIG_PROFILE=production
+      - SPRING_CLOUD_CONFIG_URI=https://configserver:8888
+      - MICROSERVICE_PTS_HOST=http://models:5000
+      - SPRING_WEB_RESOURCES_STATIC_LOCATIONS=/temp
+    volumes:
+      - ./temp-dir:/temp
+    networks:
+      - webnet
+    depends_on:
+      db:
+        condition: service_healthy
+      configserver:
+        condition: service_healthy
+
+  db:
+    image: "postgres:13-alpine"
+    container_name: db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${MAIN_DB_USER}
+      - POSTGRES_PASSWORD=${MAIN_DB_PASS}
+      - POSTGRES_DB=${MAIN_DB_NAME}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "fluentfusion"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - webnet
+
+  configserver:
+    image: "qualitypaper/pingofamily-configserver:latest"
+    container_name: configserver
+    ports:
+      - "8888:8888"
+    restart: "no"
+    environment:
+      - LOGGING_LEVEL_ROOT=debug
+    healthcheck:
+      test: ["CMD", "lsof", "-i", ":8888"]
+      interval: 30s
+      timeout: 20s
+      retries: 5
+      start_period: 60s
+    networks:
+      - webnet
+
+  models:
+    image: "qualitypaper/pingofamily-models:latest"
+    container_name: models
+    ports:
+      - "5000:5000"
+    networks:
+      - webnet
+
+  cache:
+    image: "redis:alpine"
+    container_name: cache
+    volumes:
+      - ./db/redis/users.acl:/usr/local/etc/redis/users.acl:ro
+      - ./db/redis/dump.rdb:/data/dump.rdb:ro
+    ports:
+      - "6379:6379"
+    command: >
+      redis-server
+      --aclfile /usr/local/etc/redis/users.acl
+    networks:
+      - webnet
+
+  frontend:
+    image: "qualitypaper/pingofamily-frontend:latest"
+    container_name: frontend
+    volumes:
+      - ./webserver/nginx-front/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - webnet
+
+  admin:
+    image: "qualitypaper/pingofamily-admin:latest"
+    container_name: admin
+    volumes:
+      - ./webserver/nginx-admin/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - webnet
+
+  nginx:
+    image: "nginx:alpine"
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./webserver/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./webserver/nginx-logs:/var/log/nginx
+      - ./webserver/certbot/www:/var/www/certbot
+      - ./webserver/certbot/conf:/etc/letsencrypt
+    networks:
+      - webnet
+    depends_on:
+      - backend
+
+volumes:
+  db-data:
+    driver: local
+  gitea:
+    driver: local
+  nginx-cache:
+
+networks:
+  webnet:
+    driver: bridge
