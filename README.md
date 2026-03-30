@@ -2,7 +2,7 @@
 
 ## Overview
 
-Pingo Family is a foreign language vocabulary acquisition application supporting English, German, and Spanish. The application is designed to optimize the learning process through adaptive training algorithms, spaced repetition, and AI-generated content, providing a personalized and data-driven learning experience.
+Pingo Family is a foreign language vocabulary learning application supporting English, German, and Spanish. The application is designed to optimize the learning process through adaptive training algorithms, spaced repetition, and AI-generated content, providing a personalized and data-driven learning experience.
 
 ---
 
